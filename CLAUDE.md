@@ -15,4 +15,4 @@ Interactive what-if tool for Jon Yoder's manuscript *The Fate of Conserved Water
 The tool is also published as a private claude.ai Artifact: https://claude.ai/artifact/CzXkXJRv9GnKXHcyjcutKH
 
 1. `npm run build:artifact` writes `dist/artifact.html` (index.html without the document wrapper).
-2. Publish with the Artifact tool: `url` set to the link above, `file_path` the built page, and `files` mapping `src/model.js`, `src/presets.js`, `src/app.js` to their sources. Copy them to the session scratchpad first if the repo is outside the working directory.
+2. Publish with the Artifact tool: `url` set to the link above, `file_path` set to `dist/artifact.html`, and `files` mapping `src/model.js`, `src/presets.js`, and `src/app.js` to the repo files of the same names. The repo must be one of the session's working directories.
