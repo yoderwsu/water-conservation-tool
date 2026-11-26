@@ -7,6 +7,8 @@ Interactive what-if tool for Jon Yoder's manuscript *The Fate of Conserved Water
 - `src/model.js` mirrors the manuscript's equations and notation. States 0 (before), τ (practice in place, freed water unused), 1 (after disposition). F = −Δ^τW, F_wet = −Δ^τD, F_dry = −Δ^τR; ΔD = −F_wet + F·Σλ_i·d_i; φ = −ΔD/F. Keep the model free of DOM code.
 - `test/model.test.js` pins the manuscript's Table 4 (`tab:scenarios`). Run `npm test` after any model change. If the paper's numbers or notation change, update the model and tests to match, and the reverse.
 - No build step and no runtime dependencies for the page. Scripts load as classic scripts (UMD globals `WaterModel`, `WaterPresets`) so `index.html` works from `file://`.
+- Equations in the "Model and assumptions" section are MathML, generated from each `<span class="tex" data-tex="...">` by `npm run render:math` (dev dependency temml; run `npm install` once). Edit the `data-tex` LaTeX, then rerun the script and commit the result. Equation numbers there must match the manuscript.
+- Panel text stays in plain words, with no equations or symbols; equations belong only in "Model and assumptions".
 - Example numbers are illustrative, not estimates; the page says so.
 - Prose in the README and docs follows Jon's writing standard (`yoderwsu/writing-standards`) where it applies.
 

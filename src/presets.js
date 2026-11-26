@@ -12,7 +12,7 @@
   const SECTORS = {
     irr: {
       name: "Irrigation district",
-      labels: { cb: ["Crop ET", "beneficial"], cn: ["Other ET", "soil, canal, weeds"], q: ["Tailwater", "quick path"], s: ["Seepage + percolation", "slow path"] },
+      labels: { cb: ["Crop ET", "water the crop uses to grow"], cn: ["Other ET", "soil and canal evaporation, weeds"], q: ["Tailwater", "runs off fields, back within days"], s: ["Seepage + percolation", "soaks in, returns over months"] },
       quickQ: "Where does tailwater go?", quick: { river: "Back to the river", sink: "To a drain or sink" },
       slowQ: "Where do seepage and percolation go?", slow: { aq: "A connected aquifer that feeds the river", sink: "A saline or unusable aquifer" },
       profile: [0, 0, 0, 0.06, 0.14, 0.2, 0.24, 0.2, 0.13, 0.03, 0, 0],
@@ -20,7 +20,7 @@
     },
     muni: {
       name: "Municipal utility",
-      labels: { cb: ["Outdoor ET", "lawns and trees, beneficial"], cn: ["Other evaporation", "non-beneficial"], q: ["Indoor effluent", "quick path"], s: ["Outdoor percolation + leaks", "slow path"] },
+      labels: { cb: ["Outdoor ET", "water lawns and trees use"], cn: ["Other evaporation", "delivers no service"], q: ["Indoor effluent", "treated wastewater, back within days"], s: ["Outdoor percolation + leaks", "soaks in, returns over months"] },
       quickQ: "Where is effluent discharged?", quick: { river: "To the river (inland city)", sink: "To the ocean (coastal city)" },
       slowQ: "Where do percolation and leaks go?", slow: { aq: "A connected aquifer that feeds the river", sink: "An unusable aquifer or sink" },
       profile: [0.055, 0.055, 0.065, 0.08, 0.095, 0.11, 0.125, 0.12, 0.1, 0.08, 0.06, 0.055],

@@ -5,9 +5,13 @@
   "description": "Conserved Water Ledger: an interactive what-if tool for the fate of conserved water.",
   "scripts": {
     "test": "node --test",
-    "build:artifact": "node scripts/build-artifact.js"
+    "build:artifact": "node scripts/build-artifact.js",
+    "render:math": "node scripts/render-math.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "temml": "0.10.29"
   }
 }

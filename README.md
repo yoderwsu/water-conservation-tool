@@ -38,6 +38,7 @@ The tests pin the paper's scenario table (Table 4) and check the identities of E
 | `src/app.js` | User interface: controls and drawing. |
 | `index.html` | Page markup and styles. |
 | `test/model.test.js` | Tests (`node --test`). |
+| `scripts/render-math.js` | Typesets the equations in `index.html` as MathML (`npm run render:math`, after `npm install`). The output is committed, so the page loads no math library. |
 | `scripts/build-artifact.js` | Builds `dist/artifact.html` for publishing as a claude.ai Artifact. |
 | `docs/ROADMAP.md` | Architecture and next steps. |
 
