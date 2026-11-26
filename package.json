@@ -1,0 +1,13 @@
+{
+  "name": "water-conservation-tool",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Conserved Water Ledger: an interactive what-if tool for the fate of conserved water.",
+  "scripts": {
+    "test": "node --test",
+    "build:artifact": "node scripts/build-artifact.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

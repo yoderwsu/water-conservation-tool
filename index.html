@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Conserved Water Ledger</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: two-pane workbench. Controls on the left (sticky on wide screens), the two ledgers, the hydrograph and the state table on the right; one column on phones. */
+:root{
+  --bg:#eef2f4; --panel:#ffffff; --fg:#13202a; --muted:#566874; --rule:#d5dde2; --soft:#e4eaee;
+  --early:#94b8e0; --late:#2f6db5; --dep:#a49d92; --accent:#b8652e;
+  --good:#2b7a4b; --bad:#b4372b;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e151b; --panel:#151f27; --fg:#e3eaef; --muted:#93a4b0; --rule:#2a3843; --soft:#1d2a34;
+  --early:#3f6794; --late:#79b0f0; --dep:#7a756c; --accent:#e08b52;
+  --good:#5cc28a; --bad:#ec7a68; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0e151b; --panel:#151f27; --fg:#e3eaef; --muted:#93a4b0; --rule:#2a3843; --soft:#1d2a34;
+  --early:#3f6794; --late:#79b0f0; --dep:#7a756c; --accent:#e08b52;
+  --good:#5cc28a; --bad:#ec7a68; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.45}
+.wrap{max-width:1280px;margin:0 auto;padding-block:20px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:16px}
+h1{font-family:var(--f-display);font-weight:600;font-size:1.9rem;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.sub{color:var(--muted);margin:4px 0 0;max-width:62ch}
+.grid{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:8px}
+aside.controls{padding:4px 16px 16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px);overflow:auto}
+@media (max-width:900px){aside.controls{position:static;max-height:none}}
+fieldset{border:0;margin:0;padding:14px 0;border-bottom:1px solid var(--rule)}
+fieldset:last-child{border-bottom:0}
+legend{font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:0;margin-bottom:8px}
+label{display:block}
+select{width:100%;font:inherit;padding:7px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--fg)}
+.seg{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.seg button{flex:1;font:inherit;font-size:.85rem;padding:6px 8px;border:0;background:transparent;color:var(--fg);cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--panel)}
+.radio-group{display:grid;gap:4px;margin:6px 0 10px}
+.radio-group .q{font-size:.85rem;font-weight:500}
+.radio-group label{display:flex;gap:8px;align-items:center;font-size:.85rem;color:var(--fg);cursor:pointer}
+.comp-head,.comp-row{display:grid;grid-template-columns:minmax(0,1fr) 92px 92px;gap:6px 10px;align-items:center}
+.comp-head{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.comp-row{padding:5px 0}
+.comp-row .nm{font-size:.84rem;min-width:0}
+.comp-row .nm small{display:block;color:var(--muted);font-size:.74rem}
+.num{width:100%;font-family:var(--f-mono);font-size:.85rem;padding:5px 6px;border:1px solid var(--rule);border-radius:5px;background:var(--panel);color:var(--fg);text-align:right;font-variant-numeric:tabular-nums}
+.comp-total{display:grid;grid-template-columns:minmax(0,1fr) 92px 92px;gap:10px;font-family:var(--f-mono);font-size:.82rem;border-top:1px solid var(--rule);padding-top:6px;margin-top:2px;color:var(--muted)}
+.comp-total span:not(:first-child){text-align:right;padding-right:7px}
+.slider{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;margin:6px 0}
+.slider .lab{font-size:.84rem}
+.slider output{font-family:var(--f-mono);font-size:.82rem;font-variant-numeric:tabular-nums;min-width:4ch;text-align:right}
+.slider input{grid-column:1/-1;width:100%;accent-color:var(--late)}
+.note{font-size:.78rem;color:var(--muted);margin:6px 0 0}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+main.results{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;min-width:0}
+.summary{padding:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat .k{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font-family:var(--f-mono);font-size:1.55rem;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat .s{font-size:.78rem;color:var(--muted)}
+.v.reported{color:var(--accent)} .v.good{color:var(--good)} .v.bad{color:var(--bad)}
+.codeline{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)}
+.chip{font-family:var(--f-mono);font-weight:500;font-size:.95rem;padding:3px 10px;border-radius:999px;border:1.5px solid var(--fg)}
+.split{flex:1 1 220px;min-width:0}
+.splitbar{display:flex;height:12px;border-radius:3px;overflow:hidden;background:var(--soft)}
+.splitbar .w{background:var(--dep)} .splitbar .d{background:repeating-linear-gradient(45deg,var(--early) 0 4px,var(--soft) 4px 7px)}
+.splitlab{display:flex;justify-content:space-between;font-size:.76rem;color:var(--muted);margin-top:3px;font-family:var(--f-mono)}
+.sign{font-size:.84rem;margin:10px 0 0;color:var(--fg)}
+.card{padding:16px}
+.card-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 16px;margin-bottom:6px}
+h2{font-family:var(--f-display);font-weight:600;font-size:1.15rem;margin:0}
+.card p.cap{color:var(--muted);font-size:.82rem;margin:0 0 8px;max-width:75ch}
+.figbox{overflow-x:auto}
+svg{display:block;width:100%;height:auto;min-width:520px}
+.sk-lab{fill:var(--fg);font-family:var(--f-body);font-size:11.5px}
+.sk-lab.zero{fill:var(--muted)}
+.sk-val{fill:var(--fg);font-family:var(--f-mono);font-size:11px}
+.sk-dep{font-weight:600}
+.f-early{fill:var(--early)} .f-late{fill:var(--late)} .f-dep{fill:var(--dep)}
+.ax{stroke:var(--rule);stroke-width:1} .ax0{stroke:var(--muted);stroke-width:1}
+.ax-t{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px}
+.bar-a{fill:var(--accent)} .bar-b{fill:var(--late)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+table{border-collapse:collapse;width:100%;font-size:.84rem}
+th,td{padding:6px 8px;text-align:right;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+td{font-family:var(--f-mono)} td:first-child{font-family:var(--f-body)}
+thead th{font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500;vertical-align:bottom}
+tr.tot td{font-weight:600}
+.tablebox{overflow-x:auto}
+details{padding:14px 16px}
+summary{cursor:pointer;font-family:var(--f-display);font-weight:600;font-size:1.05rem}
+details .body{max-width:75ch;font-size:.88rem}
+details code{font-family:var(--f-mono);font-size:.84rem;background:var(--soft);padding:1px 4px;border-radius:3px}
+details li{margin:4px 0}
+.ex{font-size:.74rem;color:var(--muted);border:1px dashed var(--rule);border-radius:4px;padding:2px 6px}
+@media (prefers-reduced-motion:no-preference){.v,.chip{transition:color .2s}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Companion tool · The Fate of Conserved Water (draft) · v0.1</p>
+      <h1>Conserved Water Ledger</h1>
+      <p class="sub">Set a practice, its hydrologic setting, and where the freed water goes. The tool reports the saving the way a program would, then shows what the basin receives and when.</p>
+    </div>
+    <span class="ex">Illustrative numbers, not estimates</span>
+  </header>
+
+  <div class="grid">
+    <aside class="controls panel" aria-label="Scenario controls">
+      <fieldset>
+        <legend>Scenario</legend>
+        <label for="preset" class="note" style="margin:0 0 4px">Start from an example</label>
+        <select id="preset"></select>
+        <div class="seg" role="group" aria-label="Sector" style="margin-top:10px">
+          <button type="button" id="sec-irr" data-sector="irr">Irrigation district</button>
+          <button type="button" id="sec-muni" data-sector="muni">Municipal utility</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Hydrologic setting</legend>
+        <div class="radio-group" role="radiogroup" aria-labelledby="qq">
+          <span class="q" id="qq"></span>
+          <label><input type="radio" name="quick" id="quick-river" value="river"> <span id="quick-river-l"></span></label>
+          <label><input type="radio" name="quick" id="quick-sink" value="sink"> <span id="quick-sink-l"></span></label>
+        </div>
+        <div class="radio-group" role="radiogroup" aria-labelledby="qs">
+          <span class="q" id="qs"></span>
+          <label><input type="radio" name="slow" id="slow-aq" value="aq"> <span id="slow-aq-l"></span></label>
+          <label><input type="radio" name="slow" id="slow-sink" value="sink"> <span id="slow-sink-l"></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Water balance of the use</legend>
+        <div class="comp-head"><span>Path</span><span style="text-align:right">Before</span><span style="text-align:right">After practice</span></div>
+        <div id="comps"></div>
+        <div class="comp-total"><span>Withdrawal W</span><span id="w0"></span><span id="wt"></span></div>
+        <p class="note">"After practice" is the same service with the new practice, before any freed water is used again.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Where the freed water goes</legend>
+        <div id="lams"></div>
+        <div class="slider"><label class="lab" for="dt">Transferee depletes (d<sub>t</sub>)</label><output id="dt-o" for="dt"></output><input type="range" id="dt" min="0" max="1" step="0.05"></div>
+        <div class="slider"><label class="lab" for="db">Banking loses to evaporation (d<sub>b</sub>)</label><output id="db-o" for="db"></output><input type="range" id="db" min="0" max="0.5" step="0.01"></div>
+        <p class="note" id="du-note"></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Timing</legend>
+        <div class="slider"><label class="lab" for="lag">Mean lag of slow returns</label><output id="lag-o" for="lag"></output><input type="range" id="lag" min="0.5" max="12" step="0.5"></div>
+      </fieldset>
+    </aside>
+
+    <main class="results">
+      <section class="summary panel" aria-label="Summary">
+        <div class="stats">
+          <div class="stat"><div class="k">Reported saving F</div><div class="v reported" id="s-F"></div><div class="s">drop in withdrawal for the same service</div></div>
+          <div class="stat"><div class="k">Basin depletion ΔD</div><div class="v" id="s-D"></div><div class="s" id="s-D-s"></div></div>
+          <div class="stat"><div class="k">Efficacy φ</div><div class="v" id="s-phi"></div><div class="s">share of F that becomes basin water</div></div>
+          <div class="stat"><div class="k">Observed ΔW</div><div class="v" id="s-W"></div><div class="s">change at the headgate or meter</div></div>
+        </div>
+        <div class="codeline">
+          <span class="chip" id="code" title="Practice code: type · disposition"></span>
+          <div class="split">
+            <div class="splitbar" aria-hidden="true"><div class="w" id="bar-wet"></div><div class="d" id="bar-dry"></div></div>
+            <div class="splitlab"><span id="lab-wet"></span><span id="lab-dry"></span></div>
+          </div>
+        </div>
+        <p class="sign" id="sign"></p>
+      </section>
+
+      <section class="card panel" aria-label="Two-ledger Sankey">
+        <div class="card-head">
+          <h2>Two ledgers</h2>
+          <div class="seg" role="group" aria-label="Ledger to show" style="min-width:210px">
+            <button type="button" id="view-scn" aria-pressed="true">Scenario</button>
+            <button type="button" id="view-base" aria-pressed="false">Baseline</button>
+          </div>
+        </div>
+        <p class="cap">Left: where each unit of the diversion goes at the point of use. Right: what the basin sees. Color marks the basin fate, not the practice. Every panel has the same total.</p>
+        <div class="figbox"><svg id="sankey" viewBox="0 0 640 360" role="img" aria-label="Sankey diagram"></svg></div>
+      </section>
+
+      <section class="card panel" aria-label="Hydrograph difference">
+        <div class="card-head"><h2>Change in river flow by month</h2>
+          <div class="legend"><span><i style="background:var(--accent)"></i>Node A: below the diversion, above the returns</span><span><i style="background:var(--late)"></i>Node B: below all returns</span></div>
+        </div>
+        <p class="cap" id="hydro-cap"></p>
+        <div class="figbox"><svg id="hydro" viewBox="0 0 640 250" role="img" aria-label="Monthly change in flow at two nodes"></svg></div>
+      </section>
+
+      <section class="card panel" aria-label="State table">
+        <div class="card-head"><h2>Three states of the use</h2></div>
+        <p class="cap">State 0 is before the practice, state τ is after the practice with the freed water unused, and state 1 is after the freed water goes to its destinations. The last column is −Δ<sup>τ</sup>X = X<sup>0</sup> − X<sup>τ</sup>; its totals are F<sub>wet</sub> and F.</p>
+        <div class="tablebox"><table id="states"></table></div>
+      </section>
+
+      <details class="panel">
+        <summary>Model and assumptions</summary>
+        <div class="body">
+          <p>The tool evaluates the paper's equations for one use and one diversion.</p>
+          <ul>
+            <li><b>Partition.</b> <code>W = C_b + C_n + N + R</code>. Each physical path (the quick path and the slow path) counts as recoverable return R or as non-recoverable outflow N, according to the setting.</li>
+            <li><b>Freed water.</b> <code>F = −Δ<sup>τ</sup>W</code>, <code>F_wet = −Δ<sup>τ</sup>D</code>, <code>F_dry = −Δ<sup>τ</sup>R</code>, where Δ<sup>τ</sup> is the change from state 0 to state τ.</li>
+            <li><b>Type.</b> A if the practice cuts beneficial consumption (Δ<sup>τ</sup>C<sub>b</sub> below −5% of F), otherwise B if the wet part is larger and C if the dry part is larger; D if F is near zero.</li>
+            <li><b>Fate.</b> <code>ΔD = −F_wet + F·Σ λᵢ dᵢ</code> and <code>φ = −ΔD / F</code>, with <code>d_s = 0</code>.</li>
+            <li><b>Rebound.</b> Re-applied water uses the post-practice technology, so <code>d_u = D^τ / W^τ</code> and its returns split the same way.</li>
+            <li><b>Transfer.</b> The new user depletes <code>d_t</code> and returns the rest on the quick path.</li>
+            <li><b>Banking.</b> Banked water loses <code>d_b</code> to evaporation and recharges the aquifer with the rest, which returns on the slow-path schedule.</li>
+            <li><b>Shared diversion.</b> Re-applied, transferred, and banked water all pass through the original diversion, so observed withdrawal falls only by the protected share.</li>
+            <li><b>Timing.</b> A steady annual cycle. Diversions follow a monthly profile, quick returns arrive in the same month, and slow returns follow an exponential lag with the mean set above. Over a year, node B sums to <code>−ΔD</code>; node A does not.</li>
+          </ul>
+          <p>The examples use the paper's 100-unit district and reproduce its scenario table: fallowing gives φ = 0.45, modernization into trust gives 0.06, and modernization with rebound gives −0.78.</p>
+        </div>
+      </details>
+    </main>
+  </div>
+</div>
+
+<script src="src/model.js"></script>
+<script src="src/presets.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

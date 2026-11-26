@@ -1,0 +1,18 @@
+# Conserved Water Ledger — tool repo
+
+Interactive what-if tool for Jon Yoder's manuscript *The Fate of Conserved Water*. The manuscript lives in `yoderwsu/water-conservation` (edited in Overleaf); this repo holds only the tool.
+
+## Rules
+
+- `src/model.js` mirrors the manuscript's equations and notation. States 0 (before), τ (practice in place, freed water unused), 1 (after disposition). F = −Δ^τW, F_wet = −Δ^τD, F_dry = −Δ^τR; ΔD = −F_wet + F·Σλ_i·d_i; φ = −ΔD/F. Keep the model free of DOM code.
+- `test/model.test.js` pins the manuscript's Table 4 (`tab:scenarios`). Run `npm test` after any model change. If the paper's numbers or notation change, update the model and tests to match, and the reverse.
+- No build step and no runtime dependencies for the page. Scripts load as classic scripts (UMD globals `WaterModel`, `WaterPresets`) so `index.html` works from `file://`.
+- Example numbers are illustrative, not estimates; the page says so.
+- Prose in the README and docs follows Jon's writing standard (`yoderwsu/writing-standards`) where it applies.
+
+## Publishing the Artifact
+
+The tool is also published as a private claude.ai Artifact: https://claude.ai/artifact/CzXkXJRv9GnKXHcyjcutKH
+
+1. `npm run build:artifact` writes `dist/artifact.html` (index.html without the document wrapper).
+2. Publish with the Artifact tool: `url` set to the link above, `file_path` the built page, and `files` mapping `src/model.js`, `src/presets.js`, `src/app.js` to their sources. Copy them to the session scratchpad first if the repo is outside the working directory.
