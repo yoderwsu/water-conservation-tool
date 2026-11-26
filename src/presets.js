@@ -1,7 +1,7 @@
 /*
  * Sectors and example scenarios for the Conserved Water Ledger.
  * Numbers are illustrative, not estimates. The irrigation examples use the
- * 100-unit district of the paper's worked illustration (Section 7, Table 4).
+ * 100-unit district of the paper's worked illustration (Section 7, scenario table tab:scenarios).
  */
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory();

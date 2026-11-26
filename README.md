@@ -33,7 +33,7 @@ Node 18 or later:
 npm test
 ```
 
-The tests pin the paper's scenario table (Table 4) and check the identities of Equations (3)–(5) for every example. If a test fails after a model change, the manuscript may need the same change.
+The tests pin the paper's scenario table (`tab:scenarios`) and check the identities of Equations (3)–(5) for every example. If a test fails after a model change, the manuscript may need the same change.
 
 ## Layout
 

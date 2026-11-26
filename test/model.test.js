@@ -7,7 +7,7 @@ const { PRESETS, scenario } = require("../src/presets.js");
 
 const close = (a, b, tol = 1e-9, msg) => assert.ok(Math.abs(a - b) <= tol, `${msg ?? ""} expected ${b}, got ${a}`);
 
-// Paper, Table 4 (tab:scenarios). If these change, the manuscript changes too.
+// Paper, scenario table (tab:scenarios). If these change, the manuscript changes too.
 const TABLE4 = [
   { id: "fallow", code: "A·protected", F: 20, Fwet: 9, Fdry: 11, dD: -9, phi: 0.45, late: 36 },
   { id: "mod-trust", code: "C·protected", F: 50, Fwet: 3, Fdry: 47, dD: -3, phi: 0.06, late: 6 },
@@ -15,7 +15,7 @@ const TABLE4 = [
 ];
 
 for (const row of TABLE4) {
-  test(`Table 4: ${row.id}`, () => {
+  test(`scenario table: ${row.id}`, () => {
     const r = compute(scenario(row.id));
     close(r.F, row.F, 1e-9, "F"); close(r.Fwet, row.Fwet, 1e-9, "F_wet"); close(r.Fdry, row.Fdry, 1e-9, "F_dry");
     close(r.dD, row.dD, 1e-9, "Delta D"); close(r.phi, row.phi, 1e-9, "phi"); close(r.lateReturn, row.late, 1e-9, "late return");

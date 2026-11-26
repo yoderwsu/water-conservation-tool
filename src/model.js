@@ -114,7 +114,7 @@
     }
 
     const r = { qSink, sSink, P0, Pt, dtau, F, Fwet, Fdry, du, fin, W1, N1, R1, D1, dD, phi, sumLd, dW, nodeA, nodeB };
-    // Late return (paper Table 4): slow-path flow that stays in the basin, plus banked recharge.
+    // Late return (paper scenario table, tab:scenarios): slow-path flow that stays in the basin, plus banked recharge.
     r.lateReturn = (sSink ? 0 : fin.s) + fin.bank;
     Object.assign(r, practiceCode(r, lam));
     return r;
