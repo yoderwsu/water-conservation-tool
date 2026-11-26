@@ -12,6 +12,10 @@ Interactive what-if tool for Jon Yoder's manuscript *The Fate of Conserved Water
 - Example numbers are illustrative, not estimates; the page says so.
 - Prose in the README and docs follows Jon's writing standard (`yoderwsu/writing-standards`) where it applies.
 
+## Live site
+
+GitHub Pages serves `main` (root) at https://yoderwsu.github.io/water-conservation-tool/. Pushing to `main` redeploys it; keep `index.html` at the root and its script paths relative.
+
 ## Publishing the Artifact
 
 The tool is also published as a private claude.ai Artifact: https://claude.ai/artifact/CzXkXJRv9GnKXHcyjcutKH

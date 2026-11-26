@@ -4,6 +4,8 @@ An interactive what-if tool for *The Fate of Conserved Water* (Jonathan Yoder, W
 
 All numbers in the examples are illustrative, not estimates.
 
+**Live tool:** https://yoderwsu.github.io/water-conservation-tool/ (GitHub Pages, served from `main`).
+
 ## What it shows
 
 - **Summary:** the reported saving $F$, the change in basin depletion $\Delta D$, the efficacy ratio $\varphi = -\Delta D / F$, the change in observed withdrawal, the practice code (for example `C·rebound`), the wet/dry split of $F$, and the rebound sign condition.
@@ -18,6 +20,10 @@ No build step and no dependencies. Open `index.html` in a browser, or serve the 
 ```bash
 python3 -m http.server 8000
 ```
+
+## Publish it
+
+GitHub Pages serves the repository root of `main` as a static site, so every push to `main` updates the live tool within a minute or two. To set it up once: on GitHub, open **Settings → Pages**, set **Source** to **Deploy from a branch**, choose **main** and **/ (root)**, and save. The empty `.nojekyll` file tells Pages to serve the files as they are.
 
 ## Test it
 
