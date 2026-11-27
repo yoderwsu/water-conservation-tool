@@ -82,6 +82,8 @@
   }
   function custom() { st.preset = "custom"; $("preset").value = "custom"; }
   function syncLams() { LAMS.forEach(([k]) => { $("lam-" + k).value = st.lam[k]; $("lam-" + k + "-o").textContent = pct(st.lam[k]); }); }
+  // Link "drain" and "sink" in the setting options to their glossary entries.
+  const linkLoss = (t) => t.replace(/\b(drain|sink)\b/g, (m) => gl(m, m));
   // The example list shows only the chosen sector's examples.
   function fillPresets() {
     $("preset").innerHTML = PRESETS.filter((p) => p.sector === st.sector).map((p) => `<option value="${p.id}">${p.name}</option>`).join("") + `<option value="custom">Custom (edited)</option>`;
@@ -92,8 +94,8 @@
     $("preset").value = st.preset;
     ["irr", "muni"].forEach((s) => $("sec-" + s).setAttribute("aria-pressed", String(st.sector === s)));
     $("qq").textContent = sec.quickQ; $("qs").textContent = sec.slowQ;
-    $("quick-river-l").textContent = sec.quick.river; $("quick-sink-l").textContent = sec.quick.sink;
-    $("slow-aq-l").textContent = sec.slow.aq; $("slow-sink-l").textContent = sec.slow.sink;
+    $("quick-river-l").textContent = sec.quick.river; $("quick-sink-l").innerHTML = linkLoss(sec.quick.sink);
+    $("slow-aq-l").textContent = sec.slow.aq; $("slow-sink-l").innerHTML = linkLoss(sec.slow.sink);
     $("quick-" + st.quick).checked = true; $("slow-" + st.slow).checked = true;
     KEYS.forEach((k) => { $("nm-" + k).textContent = sec.labels[k][0]; $("nm2-" + k).textContent = sec.labels[k][1]; $("b-" + k).value = st.before[k]; $("a-" + k).value = st.after[k]; });
     syncLams();

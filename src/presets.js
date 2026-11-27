@@ -14,7 +14,7 @@
       name: "Irrigation district",
       labels: { cb: ["Crop ET", "water the crop uses to grow"], cn: ["Other ET", "soil and canal evaporation, weeds"], q: ["Tailwater", "runs off fields, back within days"], s: ["Seepage + percolation", "soaks in, returns over months"] },
       quickQ: "Where does tailwater go?", quick: { river: "Back to the river", sink: "To a drain or sink" },
-      slowQ: "Where do seepage and percolation go?", slow: { aq: "A connected aquifer that feeds the river", sink: "A saline or unusable aquifer" },
+      slowQ: "Where do seepage and percolation go?", slow: { aq: "A connected aquifer that feeds the river", sink: "An unusable aquifer (e.g. saline)" },
       profile: [0, 0, 0, 0.06, 0.14, 0.2, 0.24, 0.2, 0.13, 0.03, 0, 0],
       lag: 4,
     },
