@@ -22,7 +22,7 @@
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
 
-  const DISPOSITIONS = { s: "protected", u: "rebound", t: "transfer", b: "banked" };
+  const DISPOSITIONS = { s: "protected", u: "local reuse", t: "transfer", b: "banked" };
 
   /** Equation (1): partition a state into W, C_b, C_n, N, R and D. */
   function partition(x, quickSink, slowSink) {
@@ -71,7 +71,7 @@
     const F = -dtau.W, Fwet = -dtau.D, Fdry = -dtau.R;
     const Fp = Math.max(F, 0); // a practice that raises withdrawal frees nothing to dispose of
 
-    // Re-applied water uses the post-practice technology (fallback: baseline if W^tau = 0).
+    // Locally reused water uses the post-practice technology (fallback: baseline if W^tau = 0).
     const ref = Pt.W > 0 ? a : b;
     const rW = ref.cb + ref.cn + ref.q + ref.s || 1;
     const fr = { cb: ref.cb / rW, cn: ref.cn / rW, q: ref.q / rW, s: ref.s / rW };

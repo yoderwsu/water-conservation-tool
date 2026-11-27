@@ -36,7 +36,7 @@
   const PRESETS = [
     { id: "fallow", name: "Fallow 20%, water into trust", sector: "irr", before: IRR, after: { cb: 32, cn: 4, q: 8, s: 36 }, quick: "river", slow: "aq", lam: lam(1, 0, 0, 0) },
     { id: "mod-trust", name: "Modernize, saving into trust", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(1, 0, 0, 0) },
-    { id: "mod-rebound", name: "Modernize, saving used again by the district", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(0, 1, 0, 0) },
+    { id: "mod-reuse", name: "Modernize, saving used again by the district", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(0, 1, 0, 0) },
     { id: "mod-bank", name: "Modernize, saving banked in the aquifer", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(0, 0, 0, 1) },
     { id: "line-aq", name: "Line canals over a connected aquifer", sector: "irr", before: IRR, after: { cb: 40, cn: 5, q: 10, s: 25 }, quick: "river", slow: "aq", lam: lam(1, 0, 0, 0) },
     { id: "line-saline", name: "Line canals over a saline aquifer", sector: "irr", before: IRR, after: { cb: 40, cn: 5, q: 10, s: 25 }, quick: "river", slow: "sink", lam: lam(1, 0, 0, 0) },

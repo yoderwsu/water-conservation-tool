@@ -8,7 +8,7 @@ All numbers in the examples are illustrative, not estimates.
 
 ## What it shows
 
-- **Summary:** the reported saving $F$, the change in basin depletion $\Delta D$, the efficacy ratio $\varphi = -\Delta D / F$, the change in observed withdrawal, the practice code (for example `C·rebound`), the wet/dry split of $F$, and the rebound sign condition.
+- **Summary:** the reported saving $F$, the change in basin depletion $\Delta D$, the efficacy ratio $\varphi = -\Delta D / F$, the change in observed withdrawal, the practice code (for example `C·local reuse`), the wet/dry split of $F$, and the sign condition for local reuse.
 - **Two-ledger Sankey:** where each unit of the diversion goes at the point of use, and what the basin sees (early in the river, late via the aquifer, depleted).
 - **Monthly flow change** at two nodes: below the diversion and above the returns, and below all returns.
 - **Three states of the use:** state 0 (before), state τ (practice in place, freed water unused), state 1 (after disposition).
@@ -51,4 +51,4 @@ The tests pin the paper's scenario table (`tab:scenarios`) and check the identit
 
 ## Model assumptions (v0.1)
 
-One use and one diversion; re-applied, transferred, and banked water pass through the same diversion. Re-applied water uses the post-practice technology. The transferee depletes $d_t$ and returns the rest on the quick path. Banked water loses $d_b$ and returns the rest through the aquifer. Timing is a steady annual cycle with an exponential lag for slow returns. See `docs/ROADMAP.md` for what comes next.
+One use and one diversion; locally reused, transferred, and banked water pass through the same diversion. Locally reused water uses the post-practice technology. The transferee depletes $d_t$ and returns the rest on the quick path. Banked water loses $d_b$ and returns the rest through the aquifer. Timing is a steady annual cycle with an exponential lag for slow returns. See `docs/ROADMAP.md` for what comes next.

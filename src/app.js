@@ -9,7 +9,7 @@
   const { compute } = window.WaterModel;
   const { SECTORS, PRESETS, scenario } = window.WaterPresets;
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const LAMS = [["s", "Protected in the river or aquifer"], ["u", "Used again by the same user (rebound)"], ["t", "Transferred to another user"], ["b", "Banked underground"]];
+  const LAMS = [["s", "Protected in the river or aquifer"], ["u", "Reused locally by the same user"], ["t", "Transferred to another user"], ["b", "Banked underground"]];
   const KEYS = ["cb", "cn", "q", "s"];
   const TYPE_TEXT = {
     A: "Type A: the practice cuts consumption by giving up some output (fewer acres, less lawn). Most of the saving can become net savings.",
@@ -19,7 +19,7 @@
   };
   const DISP_TEXT = {
     protected: "Most freed water is protected in the river.",
-    rebound: "Most freed water is used again by the same user (rebound).",
+    "local reuse": "Most freed water is reused locally by the same user.",
     transfer: "Most freed water goes to another user.",
     banked: "Most freed water is banked in the aquifer.",
     mixed: "The freed water is split among several destinations.",
@@ -214,7 +214,7 @@
     sp.className = "v " + (r.phi < -0.005 ? "bad" : "");
     $("s-W").textContent = sfmt(r.dW);
     $("code").textContent = r.code;
-    $("code-exp").innerHTML = `<b>${gl("practice-code", "Practice code")}.</b> ${gl("type-" + r.type.toLowerCase(), "Type " + r.type)}${TYPE_TEXT[r.type].slice(6)} ${gl("disp-" + r.disposition, DISP_TEXT[r.disposition])}`;
+    $("code-exp").innerHTML = `<b>${gl("practice-code", "Practice code")}.</b> ${gl("type-" + r.type.toLowerCase(), "Type " + r.type)}${TYPE_TEXT[r.type].slice(6)} ${gl("disp-" + r.disposition.replace(" ", "-"), DISP_TEXT[r.disposition])}`;
     const tot = Math.abs(r.Fwet) + Math.abs(r.Fdry) || 1;
     $("bar-wet").style.width = (Math.abs(r.Fwet) / tot) * 100 + "%";
     $("bar-dry").style.width = (Math.abs(r.Fdry) / tot) * 100 + "%";

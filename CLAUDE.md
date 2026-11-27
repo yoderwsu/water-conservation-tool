@@ -11,7 +11,7 @@ Interactive what-if tool for Jon Yoder's manuscript *The Fate of Conserved Water
 - Panel text stays in plain words, with no equations or symbols; equations belong only in "Model and assumptions".
 - `types.html` defines the ledger's terms (the "Terms" glossary) and the practice types and dispositions in plain words, with no notation. Keep the glossary in step with the manuscript's terms table (`tab:definitions`, appendix of main.tex), and the types with `practiceCode` in `src/model.js` and the manuscript's typology (Table `tab:types`).
 - Terms in the page text link to their glossary entry with `<a class="gl" href="types.html#id" ...>` (in `src/app.js`, the `gl(id, text)` helper). Link the first use in each panel, not every use; every `#id` must exist in `types.html`.
-- Say "net savings" for the fall in basin depletion; don't use "real water" or "new water".
+- Say "net savings" for the fall in basin depletion; don't use "real water" or "new water". Call the λ_u disposition "local reuse" (code C·local reuse), never "rebound", which means water-level recovery in groundwater hydrology; "transfer" stays for freed water that goes to another user.
 - Some ledger labels differ from the manuscript's terms on purpose (Final vs. "after", net savings share vs. efficacy ratio, output vs. service). Jon will reconcile and cross-reference them when the ledger starts citing the manuscript; until then, leave both as they are.
 - Example numbers are illustrative, not estimates; the page says so.
 - Prose in the README and docs follows Jon's writing standard (`yoderwsu/writing-standards`) where it applies.

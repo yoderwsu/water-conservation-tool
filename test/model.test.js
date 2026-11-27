@@ -11,7 +11,7 @@ const close = (a, b, tol = 1e-9, msg) => assert.ok(Math.abs(a - b) <= tol, `${ms
 const TABLE4 = [
   { id: "fallow", code: "A·protected", F: 20, Fwet: 9, Fdry: 11, dD: -9, phi: 0.45, late: 36 },
   { id: "mod-trust", code: "C·protected", F: 50, Fwet: 3, Fdry: 47, dD: -3, phi: 0.06, late: 6 },
-  { id: "mod-rebound", code: "C·rebound", F: 50, Fwet: 3, Fdry: 47, dD: 39, phi: -0.78, late: 12 },
+  { id: "mod-reuse", code: "C·local reuse", F: 50, Fwet: 3, Fdry: 47, dD: 39, phi: -0.78, late: 12 },
 ];
 
 for (const row of TABLE4) {
@@ -23,8 +23,8 @@ for (const row of TABLE4) {
   });
 }
 
-test("rebound case: d_u = 42/50 and the basin ledger is 4 early / 12 late / 84 depleted", () => {
-  const r = compute(scenario("mod-rebound"));
+test("local-reuse case: d_u = 42/50 and the basin ledger is 4 early / 12 late / 84 depleted", () => {
+  const r = compute(scenario("mod-reuse"));
   close(r.du, 42 / 50);
   close(r.fin.left + (r.qSink ? 0 : r.fin.q), 4); close(r.lateReturn, 12); close(r.D1, 84);
 });
