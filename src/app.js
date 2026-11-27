@@ -218,7 +218,8 @@
     const tot = Math.abs(r.Fwet) + Math.abs(r.Fdry) || 1;
     $("bar-wet").style.width = (Math.abs(r.Fwet) / tot) * 100 + "%";
     $("bar-dry").style.width = (Math.abs(r.Fdry) / tot) * 100 + "%";
-    $("lab-wet").textContent = "wet " + fmt(r.Fwet) + ": would have been consumed or lost"; $("lab-dry").textContent = "dry " + fmt(r.Fdry) + ": would have returned anyway";
+    $("lab-wet").innerHTML = `<span class="key w">${gl("wet", "wet")} ${fmt(r.Fwet)}</span>would have been consumed or lost`;
+    $("lab-dry").innerHTML = `<span class="key d">${gl("dry", "dry")} ${fmt(r.Fdry)}</span>would have returned anyway`;
     let sign;
     if (r.F <= 1e-9) sign = "The practice frees no water, so there is nothing to protect or use again. Any effect comes from timing and location.";
     else {
