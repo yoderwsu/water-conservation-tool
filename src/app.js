@@ -9,17 +9,17 @@
   const { compute } = window.WaterModel;
   const { SECTORS, PRESETS, scenario } = window.WaterPresets;
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const LAMS = [["s", "Protected in the source"], ["u", "Re-applied by the proprietor (rebound)"], ["t", "Transferred to another user"], ["b", "Banked or recharged"]];
+  const LAMS = [["s", "Protected in the river or aquifer"], ["u", "Used again by the same user (rebound)"], ["t", "Transferred to another user"], ["b", "Banked underground"]];
   const KEYS = ["cb", "cn", "q", "s"];
   const TYPE_TEXT = {
-    A: "Type A: the practice cuts consumption and gives up some service (fewer acres, less lawn). Most of the saving can become net savings.",
-    B: "Type B: the practice cuts evaporation or loss to a sink and keeps the service. Nearly all of the saving can become net savings.",
-    C: "Type C: the practice mostly cuts water that would have flowed back. Little of the saving can become net savings; mostly the timing and location of flows change.",
-    D: "Type D: the practice frees little or no withdrawal. Any effect comes from moving water in time or space.",
+    A: "Type A: the practice cuts consumption by giving up some output (fewer acres, less lawn). Most of the saving can become net savings.",
+    B: "Type B: the practice cuts evaporation or loss to a sink and keeps the same output. Nearly all of the saving can become net savings.",
+    C: "Type C: the practice mostly cuts water that would have flowed back. Little of the saving can become net savings; mainly the timing and location of flows change.",
+    D: "Type D: the practice frees little or no withdrawal. Any effect comes from moving water in time or place.",
   };
   const DISP_TEXT = {
     protected: "Most freed water is protected in the river.",
-    rebound: "Most freed water is re-applied by the same user (rebound).",
+    rebound: "Most freed water is used again by the same user (rebound).",
     transfer: "Most freed water goes to another user.",
     banked: "Most freed water is banked in the aquifer.",
     mixed: "The freed water is split among several destinations.",
@@ -47,7 +47,6 @@
   // ---------- controls ----------
   function buildControls() {
     const sel = $("preset");
-    sel.innerHTML = PRESETS.map((p) => `<option value="${p.id}">${p.name}</option>`).join("") + `<option value="custom">Custom (edited)</option>`;
     sel.addEventListener("change", () => { if (sel.value !== "custom") { load(sel.value); sync(); render(); } });
 
     $("comps").innerHTML = KEYS.map((k) => `<div class="comp-row"><div class="nm"><span id="nm-${k}"></span><small id="nm2-${k}"></small></div>
@@ -83,8 +82,13 @@
   }
   function custom() { st.preset = "custom"; $("preset").value = "custom"; }
   function syncLams() { LAMS.forEach(([k]) => { $("lam-" + k).value = st.lam[k]; $("lam-" + k + "-o").textContent = pct(st.lam[k]); }); }
+  // The example list shows only the chosen sector's examples.
+  function fillPresets() {
+    $("preset").innerHTML = PRESETS.filter((p) => p.sector === st.sector).map((p) => `<option value="${p.id}">${p.name}</option>`).join("") + `<option value="custom">Custom (edited)</option>`;
+  }
   function sync() {
     const sec = SECTORS[st.sector];
+    fillPresets();
     $("preset").value = st.preset;
     ["irr", "muni"].forEach((s) => $("sec-" + s).setAttribute("aria-pressed", String(st.sector === s)));
     $("qq").textContent = sec.quickQ; $("qs").textContent = sec.slowQ;
@@ -111,7 +115,7 @@
       { label: sec.labels.q[0] + (r.qSink ? " (to sink)" : ""), v: x.q, basin: r.qSink ? "dep" : "early" },
       { label: sec.labels.s[0] + (r.sSink ? " (to sink)" : ""), v: x.s, basin: r.sSink ? "dep" : "late" },
     ];
-    if ((x.bank || 0) > 1e-9) n.push({ label: "Banked recharge", v: x.bank, basin: "late" });
+    if ((x.bank || 0) > 1e-9) n.push({ label: "Banked underground", v: x.bank, basin: "late" });
     n.push({ label: sec.labels.cn[0], v: x.cn, basin: "dep" }, { label: sec.labels.cb[0], v: x.cb, basin: "dep" });
     return n;
   }
@@ -125,7 +129,7 @@
     const k = (H - top - bottom - gap * (nodes.length - 1)) / Math.max(total, 1e-9);
     let y = top;
     nodes.forEach((n) => { n.y = y; n.h = Math.max(n.v * k, 0); y += n.h + gap; });
-    const BAS = [["early", "Early in river"], ["late", "Late, via aquifer"], ["dep", "Depleted (ET or sink)"]];
+    const BAS = [["early", "Back early, in the river"], ["late", "Back late, via the aquifer"], ["dep", "Consumed or lost"]];
     const tot = { early: 0, late: 0, dep: 0 };
     nodes.forEach((n) => (tot[n.basin] += n.v));
     const rgap = 30, rh = BAS.reduce((s, [b]) => s + tot[b] * k, 0) + rgap * 2;
@@ -150,7 +154,7 @@
       svg.appendChild(el("rect", { x: xr, y: p.y, width: nw, height: Math.max(p.h, 1), class: "f-" + b }));
       svg.appendChild(el("text", { x: xr + nw + 8, y: p.y + p.h / 2 - 7, "dominant-baseline": "middle", class: "sk-lab" + (b === "dep" ? " sk-dep" : "") }, lab));
       let v = fmt(tot[b]);
-      if (b === "dep" && st.view === "scn") v += `  (Δ ${sfmt(tot[b] - r.P0.D)})`;
+      if (b === "dep" && st.view === "scn") v += `  (${sfmt(tot[b] - r.P0.D)} from before)`;
       svg.appendChild(el("text", { x: xr + nw + 8, y: p.y + p.h / 2 + 8, "dominant-baseline": "middle", class: "sk-val" + (b === "dep" ? " sk-dep" : "") }, v));
     });
   }
@@ -175,7 +179,7 @@
       svg.appendChild(el("text", { x: gx, y: H - 8, "text-anchor": "middle", class: "ax-t" }, MONTHS[t]));
     }
     const sA = r.nodeA.reduce((a, b) => a + b, 0), sB = r.nodeB.reduce((a, b) => a + b, 0);
-    $("hydro-cap").textContent = `Units of water per month, compared with the baseline. Over the year, Node A changes by ${sfmt(sA)} and Node B by ${sfmt(sB)}; the Node B total equals the basin's gain (positive) or loss (negative). Slow returns take ${fmt(st.lag)} months on average to arrive.`;
+    $("hydro-cap").textContent = `Change from before, in units of water per month. Over the year, Node A changes by ${sfmt(sA)} and Node B by ${sfmt(sB)}, the net savings. Slow returns take ${fmt(st.lag)} months on average to arrive.`;
   }
   function drawTable(r) {
     const P0 = r.P0, Pt = r.Pt, f = r.fin;
@@ -183,9 +187,9 @@
       ["Beneficial consumption (crops, lawns)", P0.cb, Pt.cb, f.cb],
       ["Other consumption (evaporation, weeds)", P0.cn, Pt.cn, f.cn],
       ["Outflow lost to a sink", P0.N, Pt.N, r.N1],
-      ["Return flow that stays in the basin", P0.R, Pt.R, r.R1],
+      ["Return flow", P0.R, Pt.R, r.R1],
     ];
-    let h = `<thead><tr><th>Part of the water balance</th><th>Before</th><th>After practice</th><th>After reuse</th><th>Freed by the practice</th></tr></thead><tbody>`;
+    let h = `<thead><tr><th>Part of the water balance</th><th>Before</th><th>After practice</th><th>Final</th><th>Freed by the practice</th></tr></thead><tbody>`;
     rows.forEach(([n, x0, xt, x1]) => { h += `<tr><td>${n}</td><td>${fmt(x0)}</td><td>${fmt(xt)}</td><td>${fmt(x1)}</td><td>${fmt(x0 - xt)}</td></tr>`; });
     h += `<tr class="tot"><td>Depletion (consumed or lost)</td><td>${fmt(P0.D)}</td><td>${fmt(Pt.D)}</td><td>${fmt(r.D1)}</td><td>${fmt(r.Fwet)} wet saving</td></tr>`;
     h += `<tr class="tot"><td>Withdrawal</td><td>${fmt(P0.W)}</td><td>${fmt(Pt.W)}</td><td>${fmt(r.W1)}</td><td>${fmt(r.F)} reported saving</td></tr>`;
@@ -197,12 +201,12 @@
     const r = compute(st);
     $("w0").textContent = fmt(r.P0.W); $("wt").textContent = fmt(r.Pt.W);
     $("dt-o").textContent = fmt(st.dt, 2); $("db-o").textContent = fmt(st.db, 2); $("lag-o").textContent = fmt(st.lag) + " mo";
-    $("du-note").textContent = `Water re-applied by the same user is used with the new technology, so ${pct(r.du)} of it is consumed.`;
+    $("du-note").textContent = `The same user applies reused water with the new practice, so ${pct(r.du)} of it is consumed.`;
     $("s-F").textContent = fmt(r.F);
     const sD = $("s-D");
-    sD.textContent = sfmt(r.dD);
+    sD.textContent = fmt(-r.dD);
     sD.className = "v " + (r.dD > 0.05 ? "bad" : r.dD < -0.05 ? "good" : "");
-    $("s-D-s").innerHTML = r.dD > 0.05 ? `Water consumed or lost to the basin each year. Here it rises by ${fmt(r.dD)}: the basin loses water.` : r.dD < -0.05 ? `Water consumed or lost to the basin each year. Here it falls by ${fmt(-r.dD)}, the ${gl("net-savings", "net savings")}.` : "Water consumed or lost to the basin each year. Here it does not change.";
+    $("s-D-s").textContent = r.dD > 0.05 ? "Below zero: the basin now consumes or loses more water each year than before." : r.dD < -0.05 ? "Fall in water consumed or lost to the basin each year." : "Water consumed or lost to the basin does not change.";
     const sp = $("s-phi");
     sp.textContent = fmt(r.phi, 2);
     sp.className = "v " + (r.phi < -0.005 ? "bad" : "");
@@ -214,15 +218,15 @@
     $("bar-dry").style.width = (Math.abs(r.Fdry) / tot) * 100 + "%";
     $("lab-wet").textContent = "wet " + fmt(r.Fwet) + ": would have been consumed or lost"; $("lab-dry").textContent = "dry " + fmt(r.Fdry) + ": would have returned anyway";
     let sign;
-    if (r.F <= 1e-9) sign = "The practice frees no withdrawal, so there is nothing to protect or re-apply. Any effect comes through timing and routing.";
+    if (r.F <= 1e-9) sign = "The practice frees no water, so there is nothing to protect or use again. Any effect comes from timing and location.";
     else {
       const used = r.F * r.sumLd;
       sign = used < 0.05
         ? `None of the freed water is consumed again, so ${gl("net-savings", "net savings")} equal the whole ${gl("wet", "wet saving")} of ${fmt(r.Fwet)}.`
-        : `The basin loses water when the freed water that is used again consumes more than the ${gl("wet", "wet saving")}. Here reuse consumes ${fmt(used)} units against a wet saving of ${fmt(r.Fwet)}.`;
+        : `Net savings fall below zero when reuse of the freed water consumes more than the ${gl("wet", "wet saving")}. Here reuse consumes ${fmt(used)} units against a wet saving of ${fmt(r.Fwet)}.`;
       if (r.du > 1e-9) {
         const th = r.Fwet / (r.F * r.du);
-        sign += th < 1 ? ` If the rest were protected, re-applying more than ${pct(Math.max(th, 0))} of the freed water would make the basin worse off.` : " Even if the user re-applied all of it, the basin would not lose water.";
+        sign += th < 1 ? ` If the rest were protected, net savings would fall below zero once the same user reuses more than ${pct(Math.max(th, 0))} of the freed water.` : " Even if the same user reused all of it, net savings would not fall below zero.";
       }
     }
     $("sign").innerHTML = sign;

@@ -20,7 +20,7 @@
     },
     muni: {
       name: "Municipal utility",
-      labels: { cb: ["Outdoor ET", "water lawns and trees use"], cn: ["Other evaporation", "delivers no service"], q: ["Indoor effluent", "treated wastewater, back within days"], s: ["Outdoor percolation + leaks", "soaks in, returns over months"] },
+      labels: { cb: ["Outdoor ET", "water lawns and trees use"], cn: ["Other evaporation", "produces nothing"], q: ["Indoor effluent", "treated wastewater, back within days"], s: ["Outdoor percolation + leaks", "soaks in, returns over months"] },
       quickQ: "Where is effluent discharged?", quick: { river: "To the river (inland city)", sink: "To the ocean (coastal city)" },
       slowQ: "Where do percolation and leaks go?", slow: { aq: "A connected aquifer that feeds the river", sink: "An unusable aquifer or sink" },
       profile: [0.055, 0.055, 0.065, 0.08, 0.095, 0.11, 0.125, 0.12, 0.1, 0.08, 0.06, 0.055],
@@ -36,7 +36,7 @@
   const PRESETS = [
     { id: "fallow", name: "Fallow 20%, water into trust", sector: "irr", before: IRR, after: { cb: 32, cn: 4, q: 8, s: 36 }, quick: "river", slow: "aq", lam: lam(1, 0, 0, 0) },
     { id: "mod-trust", name: "Modernize, saving into trust", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(1, 0, 0, 0) },
-    { id: "mod-rebound", name: "Modernize, saving re-applied under proration", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(0, 1, 0, 0) },
+    { id: "mod-rebound", name: "Modernize, saving used again by the district", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(0, 1, 0, 0) },
     { id: "mod-bank", name: "Modernize, saving banked in the aquifer", sector: "irr", before: IRR, after: MODERN, quick: "river", slow: "aq", lam: lam(0, 0, 0, 1) },
     { id: "line-aq", name: "Line canals over a connected aquifer", sector: "irr", before: IRR, after: { cb: 40, cn: 5, q: 10, s: 25 }, quick: "river", slow: "aq", lam: lam(1, 0, 0, 0) },
     { id: "line-saline", name: "Line canals over a saline aquifer", sector: "irr", before: IRR, after: { cb: 40, cn: 5, q: 10, s: 25 }, quick: "river", slow: "sink", lam: lam(1, 0, 0, 0) },

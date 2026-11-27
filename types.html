@@ -74,12 +74,18 @@ h3{font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:
 
   <section class="panel" aria-labelledby="terms">
     <h2 id="terms">Terms</h2>
-    <h3>Water balance of a use</h3>
+    <h3>Who and what</h3>
     <dl>
-      <div class="term" id="withdrawal"><dt>Withdrawal</dt><dd>Water a use diverts from a river or pumps from a well. In the ledger, it is the total of the paths under <b>Water balance</b>.</dd></div>
+      <div class="term" id="water-user"><dt>Water user</dt><dd>The irrigation district or city utility whose conservation the ledger evaluates.</dd></div>
+      <div class="term" id="practice"><dt>Practice</dt><dd>The conservation step being evaluated, such as lining a canal, fallowing a field, or installing low-flow fixtures.</dd></div>
+      <div class="term" id="output"><dt>Output</dt><dd>What the water user's water produces: crops grown, lawns and trees watered, homes and businesses served. Most practices keep the same output; fallowing and turf removal reduce it.</dd></div>
+    </dl>
+    <h3>Water balance</h3>
+    <dl>
+      <div class="term" id="withdrawal"><dt>Withdrawal</dt><dd>Water the water user diverts from a river or pumps from a well. In the ledger, it is the total of the paths under <b>Water balance</b>.</dd></div>
       <div class="term" id="depletion"><dt>Depletion (consumed or lost)</dt><dd>Water that leaves the basin for good: used by plants, evaporated, exported, or sent to a sink. No one downstream can use it again.</dd></div>
-      <div class="term" id="beneficial"><dt>Beneficial consumption</dt><dd>Plant use or evaporation that delivers what the water is for, such as a crop or a green lawn.</dd></div>
-      <div class="term" id="other-consumption"><dt>Other consumption</dt><dd>Plant use or evaporation that delivers nothing, such as evaporation from bare soil or open canals and water used by weeds.</dd></div>
+      <div class="term" id="beneficial"><dt>Beneficial consumption</dt><dd>Plant use or evaporation that produces the output, such as a crop or a green lawn.</dd></div>
+      <div class="term" id="other-consumption"><dt>Other consumption</dt><dd>Plant use or evaporation that produces nothing, such as evaporation from bare soil or open canals and water used by weeds.</dd></div>
       <div class="term" id="sink"><dt>Outflow lost to a sink</dt><dd>Water that leaves usable reach: flow to a salty or unusable aquifer, the ocean, another basin, or an aquifer too deep to pump. It counts as depletion.</dd></div>
       <div class="term" id="return-flow"><dt>Return flow</dt><dd>Water that comes back to a usable river or connected aquifer after use: canal seepage, deep percolation, tailwater, leaks, or treated effluent. People, wells, and streams downstream often depend on it.</dd></div>
       <div class="term" id="quick-slow"><dt>Quick and slow returns</dt><dd>Quick returns, such as tailwater or effluent, reach the river within the month. Slow returns, such as canal seepage and deep percolation, travel through the aquifer and arrive months later.</dd></div>
@@ -87,32 +93,32 @@ h3{font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:
     </dl>
     <h3>The three steps</h3>
     <dl>
-      <div class="term" id="before"><dt>Before</dt><dd>The use as it is now, without the practice.</dd></div>
-      <div class="term" id="after-practice"><dt>After practice</dt><dd>The new practice in place, delivering the same service (or the reduced service, for fallowing or turf removal), with none of the freed water yet used again. This step measures the saving. It is a what-if, not something a meter would show.</dd></div>
-      <div class="term" id="after-reuse"><dt>After reuse</dt><dd>The final outcome, once the freed water has gone where it goes.</dd></div>
+      <div class="term" id="before"><dt>Before</dt><dd>The water user as it is now, without the practice.</dd></div>
+      <div class="term" id="after-practice"><dt>After practice</dt><dd>The practice in place, producing the same output (or less, for fallowing or turf removal), with none of the freed water used again yet. This step measures the saving. It is a what-if, not something a meter would show.</dd></div>
+      <div class="term" id="final"><dt>Final</dt><dd>The outcome once the freed water has gone where it goes: protected, used again, transferred, or banked.</dd></div>
     </dl>
     <h3>Savings</h3>
     <dl>
       <div class="term" id="reported-saving"><dt>Reported saving</dt><dd>The drop in withdrawal from <a href="#before">Before</a> to <a href="#after-practice">After practice</a>. It is the figure programs usually report, and the amount of water the practice frees for other uses (the <b>freed water</b>).</dd></div>
       <div class="term" id="wet"><dt>Wet saving</dt><dd>The part of the reported saving that would have been consumed or lost. Only this part can become net savings.</dd></div>
       <div class="term" id="dry"><dt>Dry saving</dt><dd>The part of the reported saving that would have flowed back to the river or aquifer anyway. Cutting it changes when and where water flows, not how much the basin has.</dd></div>
-      <div class="term" id="change-depletion"><dt>Change in basin depletion</dt><dd>How much more or less water the basin consumes or loses each year, from Before to After reuse. A fall is a gain for the basin; a rise is a loss.</dd></div>
-      <div class="term" id="net-savings"><dt>Net savings</dt><dd>The fall in water consumed or lost to the basin each year, once the freed water has gone where it goes. It equals the wet saving minus whatever reuse of the freed water consumes, so it can be below zero. Net savings is a total for the basin over a year; it does not say which places or months gain or lose. <span class="also">It is not the same as Washington's legal term "net water savings," which also requires that existing water rights not be impaired.</span></dd></div>
-      <div class="term" id="basin-share"><dt>Share that reaches the basin</dt><dd>Net savings as a share of the reported saving. At one, every unit reported is a unit gained; at zero, none is; below zero, the practice costs the basin water.</dd></div>
-      <div class="term" id="headgate"><dt>Change at the headgate</dt><dd>The change in water diverted, as a meter on the diversion would show it. Only protected water lowers it; water used again still passes the meter.</dd></div>
+      <div class="term" id="change-depletion"><dt>Change in basin depletion</dt><dd>How much more or less water the basin consumes or loses each year, from Before to Final. Net savings is this change with the sign reversed.</dd></div>
+      <div class="term" id="net-savings"><dt>Net savings</dt><dd>The fall in water consumed or lost to the basin each year, from Before to Final. It equals the wet saving minus whatever reuse of the freed water consumes, so it can be below zero. Net savings is a total for the basin over a year; it does not say which places or months gain or lose. <span class="also">It is not the same as Washington's legal term "net water savings," which also requires that existing water rights not be impaired.</span></dd></div>
+      <div class="term" id="basin-share"><dt>Net savings share</dt><dd>Net savings as a share of the reported saving. At one, every unit reported is a unit gained; at zero, none is; below zero, the practice costs the basin water.</dd></div>
+      <div class="term" id="withdrawal-change"><dt>Change in withdrawal</dt><dd>The change in water withdrawn from Before to Final, as a meter on the diversion would show it. Only protected water lowers it; water used again, transferred, or banked still passes the meter.</dd></div>
     </dl>
     <h3>Where the freed water goes</h3>
     <dl>
       <div class="term" id="protected"><dt>Protected in the source</dt><dd>Freed water left in the river or aquifer under legal protection, such as a trust water right. No one consumes it.</dd></div>
-      <div class="term" id="rebound"><dt>Rebound (re-applied by the same user)</dt><dd>Freed water the same user puts back to use: more acres, a fuller supply in short years, or new crops. It is applied with the new, more efficient technology, so most of it is consumed.</dd></div>
+      <div class="term" id="rebound"><dt>Rebound (used again by the same user)</dt><dd>Freed water the same user puts back to use: more acres, a fuller supply in short years, or new crops. It is applied with the new practice, which returns little, so most of it is consumed.</dd></div>
       <div class="term" id="transfer"><dt>Transferred to another user</dt><dd>Freed water that supports a different use, such as new homes or a junior water right. Its effect depends on the share the new user consumes.</dd></div>
-      <div class="term" id="banked"><dt>Banked or recharged</dt><dd>Freed water deliberately stored in an aquifer or reservoir for later release. Some evaporates; the rest returns later, like a slow return.</dd></div>
+      <div class="term" id="banked"><dt>Banked underground</dt><dd>Freed water deliberately stored in an aquifer or reservoir for later release. Some evaporates; the rest returns later, like a slow return.</dd></div>
     </dl>
     <h3>Where and when</h3>
     <dl>
       <div class="term" id="node-a"><dt>Node A</dt><dd>A point on the river just below the diversion, before any return flow comes back.</dd></div>
       <div class="term" id="node-b"><dt>Node B</dt><dd>A point on the river below every return flow. Over a full year, the change in flow at Node B equals net savings.</dd></div>
-      <div class="term" id="third-parties"><dt>Third parties</dt><dd>Water users, groundwater pumpers, and streams, other than the one who conserves, that rely on return flow or on water a practice now consumes.</dd></div>
+      <div class="term" id="third-parties"><dt>Third parties</dt><dd>Other water users, groundwater pumpers, and streams that rely on return flow or on water a practice now consumes.</dd></div>
       <div class="term" id="flow-needed"><dt>Flow needed</dt><dd>The flow required at a point and time, such as an instream flow target or the demands of users who rely on flow there. <span class="also">Not yet in the ledger.</span></dd></div>
       <div class="term" id="shortfall"><dt>Shortfall</dt><dd>How far flow falls below the flow needed. A practice harms no one downstream if it adds to the shortfall at no point and in no month. <span class="also">Not yet in the ledger.</span></dd></div>
     </dl>
@@ -130,17 +136,17 @@ h3{font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:
       <div class="ends"><span>All wet: the whole saving can become net savings</span><span>All dry: none of it can</span></div>
       <div class="marks"><span style="left:6%">B</span><span style="left:45%">A</span><span style="left:94%">C</span></div>
     </div>
-    <p class="muted">Type B sits at the wet end and Type C at the dry end. Type A falls in between, because retiring a use also stops its return flow. Type D is off the scale: it frees little or no water and instead moves water in time or place.</p>
+    <p class="muted">Type B sits at the wet end and Type C at the dry end. Type A falls in between, because land or lawn taken out of use also stops returning water. Type D is off the scale: it frees little or no water and instead moves water in time or place.</p>
   </section>
 
   <section class="panel" aria-labelledby="h-types">
     <h2 id="h-types">Types</h2>
     <dl>
-      <div class="def" id="type-a"><dt>A</dt><dd><b>Depletion cut, service cut.</b> The practice uses less water by giving up some of what the water did: fewer irrigated acres, less lawn, a lower-water crop. Most of the saving can become net savings, but less than all of it, because the retired use's return flow also stops. A practice that cuts service is Type A whatever else it changes.
+      <div class="def" id="type-a"><dt>A</dt><dd><b>Less consumption, less output.</b> The practice uses less water by giving up some output: fewer irrigated acres, less lawn, a lower-water crop. Most of the saving can become net savings, but less than all of it, because the land or lawn taken out of use also stops returning water. A practice that cuts output is Type A whatever else it changes.
         <p class="ex">Examples: fallowing, deficit irrigation, crop switching, turf removal, outdoor watering limits.</p></dd></div>
-      <div class="def" id="type-b"><dt>B</dt><dd><b>Depletion cut, service kept.</b> The practice delivers the same service and mainly cuts water that would have evaporated or drained to a sink. Nearly all of the saving can become net savings. These are the only "pure" efficiency savings.
+      <div class="def" id="type-b"><dt>B</dt><dd><b>Less loss, same output.</b> The practice keeps the same output and mainly cuts water that would have evaporated or drained to a sink. Nearly all of the saving can become net savings. These are the only "pure" efficiency savings.
         <p class="ex">Examples: soil-evaporation control, removing water-loving brush, lining a canal over a salty or unusable aquifer, reusing effluent that went to a sink.</p></dd></div>
-      <div class="def" id="type-c"><dt>C</dt><dd><b>Return-flow cut.</b> The practice delivers the same service and mainly cuts water that would have flowed back. Little or none of the saving can become net savings. River flow rises between the diversion and the return point early in the season, and baseflow, recharge, and late-season supply downstream fall.
+      <div class="def" id="type-c"><dt>C</dt><dd><b>Less return flow.</b> The practice keeps the same output and mainly cuts water that would have flowed back. Little or none of the saving can become net savings. River flow rises between the diversion and the return point early in the season, and baseflow, recharge, and late-season supply downstream fall.
         <p class="ex">Examples: lining or piping over a connected aquifer, drip or sprinkler conversion where percolation returned to the river, main-line leak repair, indoor retrofits and effluent reuse in inland cities.</p></dd></div>
       <div class="def" id="type-d"><dt>D</dt><dd><b>Re-timing and relocation.</b> The practice frees little or no withdrawal. It moves water to when and where it is needed, and is the natural offset for a Type C practice.
         <p class="ex">Examples: managed aquifer recharge, aquifer storage and recovery, water banking, conjunctive use, reservoir reoperation.</p></dd></div>
@@ -154,7 +160,7 @@ h3{font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:
       <thead><tr><th>Word</th><th>Where most freed water goes</th><th>Effect on the basin</th></tr></thead>
       <tbody>
         <tr id="disp-protected"><td>protected</td><td>Stays in the river under legal protection.</td><td>The wet part becomes net savings. This is the intended outcome for Types A and B.</td></tr>
-        <tr id="disp-rebound"><td>rebound</td><td>Re-applied by the same user, usually with the new, more consumptive technology.</td><td>Water consumed in the basin can rise. For Type C, almost any rebound raises it.</td></tr>
+        <tr id="disp-rebound"><td>rebound</td><td>Used again by the same user, with the new practice.</td><td>Water consumed in the basin can rise. For Type C, almost any rebound raises it.</td></tr>
         <tr id="disp-transfer"><td>transfer</td><td>Goes to another user, such as new housing or a junior right.</td><td>Depends on how much the new user consumes.</td></tr>
         <tr id="disp-banked"><td>banked</td><td>Stored in an aquifer or reservoir for later release.</td><td>Makes the practice partly Type D.</td></tr>
         <tr id="disp-mixed"><td>mixed</td><td>No single destination takes most of the freed water.</td><td>Read the two ledgers for the split.</td></tr>
@@ -166,7 +172,7 @@ h3{font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:
     <h2 id="h-rules">How the ledger assigns a code</h2>
     <ul>
       <li>Type D if the practice frees less than half a unit of withdrawal.</li>
-      <li>Otherwise, Type A if the cut in water consumed by the service is more than 5% of the freed water.</li>
+      <li>Otherwise, Type A if the practice cuts beneficial consumption by more than 5% of the freed water.</li>
       <li>Otherwise, Type B if the wet part is at least as large as the dry part, and Type C if the dry part is larger.</li>
       <li>The disposition is the destination that takes at least 60% of the freed water, or "mixed" if none does. The paper names four dispositions; "mixed" is the ledger's label for the in-between case.</li>
     </ul>
