@@ -9,7 +9,9 @@ Interactive what-if tool for Jon Yoder's manuscript *The Fate of Conserved Water
 - No build step and no runtime dependencies for the page. Scripts load as classic scripts (UMD globals `WaterModel`, `WaterPresets`) so `index.html` works from `file://`.
 - Equations in the "Model and assumptions" section are MathML, generated from each `<span class="tex" data-tex="...">` by `npm run render:math` (dev dependency temml; run `npm install` once). Edit the `data-tex` LaTeX, then rerun the script and commit the result. Equation numbers there must match the manuscript.
 - Panel text stays in plain words, with no equations or symbols; equations belong only in "Model and assumptions".
-- `types.html` defines the practice types and dispositions in plain words. Keep it in step with `practiceCode` in `src/model.js` and with the manuscript's typology (Table `tab:types`).
+- `types.html` defines the ledger's terms (the "Terms" glossary) and the practice types and dispositions in plain words, with no notation. Keep the glossary in step with the manuscript's terms table (`tab:definitions`, appendix of main.tex), and the types with `practiceCode` in `src/model.js` and the manuscript's typology (Table `tab:types`).
+- Terms in the page text link to their glossary entry with `<a class="gl" href="types.html#id" ...>` (in `src/app.js`, the `gl(id, text)` helper). Link the first use in each panel, not every use; every `#id` must exist in `types.html`.
+- Say "net savings" for the fall in basin depletion; don't use "real water" or "new water".
 - Example numbers are illustrative, not estimates; the page says so.
 - Prose in the README and docs follows Jon's writing standard (`yoderwsu/writing-standards`) where it applies.
 

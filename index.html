@@ -123,6 +123,9 @@ details li{margin:4px 0}
 .codeexp b{font-weight:600}
 .codekey{font-size:.8rem;color:var(--muted);margin:4px 0 0;max-width:80ch}
 .codekey a{color:var(--late)}
+/* Links from a term to its definition on types.html: quiet, but visibly a link. */
+a.gl{color:inherit;text-decoration:underline dotted;text-decoration-color:var(--muted);text-underline-offset:2px}
+a.gl:hover{color:var(--late);text-decoration-color:currentColor}
 .nodes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 24px;margin:4px 0 10px}
 @media (max-width:640px){.nodes{grid-template-columns:minmax(0,1fr)}}
 .nodes p{font-size:.84rem;margin:0}
@@ -168,8 +171,8 @@ details .body p{margin:6px 0}
   <section class="intro panel" aria-label="About this tool">
     <div>
       <h2>Why a reported saving can mislead</h2>
-      <p>Programs usually count a conservation saving as less water withdrawn at the headgate or meter. Much of the water a use withdraws, however, flows back to the river or to an aquifer that feeds it, and people and fish downstream depend on that return flow. A practice that only cuts return flow saves the basin little or nothing. Freed water that is used again, on more acres or by a new user, can even raise the amount of water consumed.</p>
-      <p>The ledger separates these effects. It splits the reported saving into the part that would have been consumed or lost (the <b>wet</b> saving) and the part that would have come back anyway (the <b>dry</b> saving), follows the freed water to where it goes, and shows the change in river flow month by month.</p>
+      <p>Programs usually count a conservation saving as less water withdrawn at the headgate or meter. Much of the water a use withdraws, however, flows back to the river or to an aquifer that feeds it, and people and fish downstream depend on that return flow. A practice that only cuts <a class="gl" href="types.html#return-flow" target="_blank" rel="noopener">return flow</a> saves the basin little or nothing. Freed water that is used again, on more acres or by a new user, can even raise the amount of water consumed.</p>
+      <p>The ledger separates these effects. It splits the reported saving into the part that would have been consumed or lost (the <b><a class="gl" href="types.html#wet" target="_blank" rel="noopener">wet</a></b> saving) and the part that would have come back anyway (the <b><a class="gl" href="types.html#dry" target="_blank" rel="noopener">dry</a></b> saving), follows the freed water to where it goes, and shows the change in river flow month by month.</p>
     </div>
     <div>
       <h2>How to use it</h2>
@@ -179,7 +182,7 @@ details .body p{margin:6px 0}
         <li>Under <b>Water balance</b>, enter where each unit of withdrawn water goes before and after the practice.</li>
         <li>Under <b>Where the freed water goes</b>, split the freed water among its possible destinations.</li>
       </ol>
-      <p style="margin-top:8px">The results on the right update as you go. Read them from the top: the summary, the two ledgers, the monthly change in river flow, and the full accounting table. <b>Model and assumptions</b>, at the bottom, gives the equations.</p>
+      <p style="margin-top:8px">Underlined terms link to their definitions. The results on the right update as you go. Read them from the top: the summary, the two ledgers, the monthly change in river flow, and the full accounting table. <b>Model and assumptions</b>, at the bottom, gives the equations.</p>
     </div>
   </section>
 
@@ -198,7 +201,7 @@ details .body p{margin:6px 0}
 
       <fieldset>
         <legend>Hydrologic setting</legend>
-        <p class="help">The same hardware can save real water in one place and none in another. These choices decide whether returning water stays available to others (it reaches the river or a connected aquifer) or is lost (it reaches a sink).</p>
+        <p class="help">The same hardware can produce <a class="gl" href="types.html#net-savings" target="_blank" rel="noopener">net savings</a> in one place and none in another. These choices decide whether returning water stays available to others (it reaches the river or a connected aquifer) or is lost (it reaches a <a class="gl" href="types.html#sink" target="_blank" rel="noopener">sink</a>).</p>
         <div class="radio-group" role="radiogroup" aria-labelledby="qq">
           <span class="q" id="qq"></span>
           <label><input type="radio" name="quick" id="quick-river" value="river"> <span id="quick-river-l"></span></label>
@@ -213,7 +216,7 @@ details .body p{margin:6px 0}
 
       <fieldset>
         <legend>Water balance of the use</legend>
-        <p class="help">Where each unit of withdrawn water goes. <b>Before</b> is the current practice. <b>After practice</b> is the new practice delivering the same service (or the reduced service, for fallowing or turf removal), before any freed water is used again. The drop in the total is the reported saving.</p>
+        <p class="help">Where each unit of withdrawn water goes. <b><a class="gl" href="types.html#before" target="_blank" rel="noopener">Before</a></b> is the current practice. <b><a class="gl" href="types.html#after-practice" target="_blank" rel="noopener">After practice</a></b> is the new practice delivering the same service (or the reduced service, for fallowing or turf removal), before any freed water is used again. The drop in the total is the <a class="gl" href="types.html#reported-saving" target="_blank" rel="noopener">reported saving</a>.</p>
         <div class="comp-head"><span>Path</span><span style="text-align:right">Before</span><span style="text-align:right">After practice</span></div>
         <div id="comps"></div>
         <div class="comp-total"><span>Withdrawal</span><span id="w0"></span><span id="wt"></span></div>
@@ -221,7 +224,7 @@ details .body p{margin:6px 0}
 
       <fieldset>
         <legend>Where the freed water goes</legend>
-        <p class="help">Freed water can stay in the river under legal protection, be used again by the same user, go to another user, or be stored underground. The four shares always add up to 100%; moving one slider rescales the others.</p>
+        <p class="help">Freed water can stay in the river under <a class="gl" href="types.html#protected" target="_blank" rel="noopener">legal protection</a>, be used again by the same user (<a class="gl" href="types.html#rebound" target="_blank" rel="noopener">rebound</a>), go to <a class="gl" href="types.html#transfer" target="_blank" rel="noopener">another user</a>, or be <a class="gl" href="types.html#banked" target="_blank" rel="noopener">stored underground</a>. The four shares always add up to 100%; moving one slider rescales the others.</p>
         <div id="lams"></div>
         <div class="slider"><label class="lab" for="dt">Share the new user consumes</label><output id="dt-o" for="dt"></output><input type="range" id="dt" min="0" max="1" step="0.05"></div>
         <div class="slider"><label class="lab" for="db">Share of banked water lost to evaporation</label><output id="db-o" for="db"></output><input type="range" id="db" min="0" max="0.5" step="0.01"></div>
@@ -230,7 +233,7 @@ details .body p{margin:6px 0}
 
       <fieldset>
         <legend>Timing</legend>
-        <p class="help">How long seepage and percolation take, on average, to reach the river through the aquifer. Longer lags move the loss of return flow later into the year.</p>
+        <p class="help">How long seepage and percolation (<a class="gl" href="types.html#quick-slow" target="_blank" rel="noopener">slow returns</a>) take, on average, to reach the river through the aquifer. Longer lags move the loss of return flow later into the year.</p>
         <div class="slider"><label class="lab" for="lag">Average delay of slow returns</label><output id="lag-o" for="lag"></output><input type="range" id="lag" min="0.5" max="12" step="0.5"></div>
       </fieldset>
     </aside>
@@ -238,10 +241,10 @@ details .body p{margin:6px 0}
     <main class="results">
       <section class="summary panel" aria-label="Summary">
         <div class="stats">
-          <div class="stat"><div class="k">Reported saving</div><div class="v reported" id="s-F"></div><div class="s">Drop in water withdrawn for the same service; what programs usually report.</div></div>
-          <div class="stat"><div class="k">Change in basin depletion</div><div class="v" id="s-D"></div><div class="s" id="s-D-s"></div></div>
-          <div class="stat"><div class="k">Share that reaches the basin</div><div class="v" id="s-phi"></div><div class="s">Part of the reported saving that becomes real water for the basin. Below zero, the practice costs the basin water.</div></div>
-          <div class="stat"><div class="k">Change at the headgate</div><div class="v" id="s-W"></div><div class="s">What a meter on the diversion would show. Only protected water lowers it.</div></div>
+          <div class="stat"><div class="k"><a class="gl" href="types.html#reported-saving" target="_blank" rel="noopener">Reported saving</a></div><div class="v reported" id="s-F"></div><div class="s">Drop in water withdrawn for the same service; what programs usually report.</div></div>
+          <div class="stat"><div class="k"><a class="gl" href="types.html#change-depletion" target="_blank" rel="noopener">Change in basin depletion</a></div><div class="v" id="s-D"></div><div class="s" id="s-D-s"></div></div>
+          <div class="stat"><div class="k"><a class="gl" href="types.html#basin-share" target="_blank" rel="noopener">Share that reaches the basin</a></div><div class="v" id="s-phi"></div><div class="s">Part of the reported saving that becomes <a class="gl" href="types.html#net-savings" target="_blank" rel="noopener">net savings</a>. Below zero, the practice costs the basin water.</div></div>
+          <div class="stat"><div class="k"><a class="gl" href="types.html#headgate" target="_blank" rel="noopener">Change at the headgate</a></div><div class="v" id="s-W"></div><div class="s">What a meter on the diversion would show. Only protected water lowers it.</div></div>
         </div>
         <div class="codeline">
           <span class="chip" id="code" title="Practice type and where the freed water goes"></span>
@@ -251,7 +254,7 @@ details .body p{margin:6px 0}
           </div>
         </div>
         <p class="codeexp" id="code-exp"></p>
-        <p class="codekey">Types run from B, where nearly all of the reported saving is real water for the basin, to C, where almost none is, along the split between wet and dry savings. <a href="types.html" target="_blank" rel="noopener">All types and destinations</a></p>
+        <p class="codekey">Types run from B, where nearly all of the reported saving can become <a class="gl" href="types.html#net-savings" target="_blank" rel="noopener">net savings</a>, to C, where almost none can, along the split between wet and dry savings. <a href="types.html" target="_blank" rel="noopener">All terms, types, and destinations</a></p>
         <p class="sign" id="sign"></p>
       </section>
 
@@ -263,7 +266,7 @@ details .body p{margin:6px 0}
             <button type="button" id="view-base" aria-pressed="false">Baseline</button>
           </div>
         </div>
-        <p class="cap">The left column is the manager's ledger: where each unit of the original diversion goes at the point of use, including any water now left in the river. The right column is the basin's ledger: the same water regrouped by what the river experiences. Water is either back in the river early, returned late through the aquifer, or depleted for good. Colors show the basin outcome. Both views always total the original diversion, so switch between <b>Baseline</b> and <b>Scenario</b> to compare.</p>
+        <p class="cap">The left column is the manager's ledger: where each unit of the original diversion goes at the point of use, including any water now left in the river. The right column is the basin's ledger: the same water regrouped by what the river experiences. Water is either back in the river early, returned late through the aquifer, or <a class="gl" href="types.html#depletion" target="_blank" rel="noopener">depleted</a> for good. Colors show the basin outcome. Both views always total the original diversion, so switch between <b>Baseline</b> and <b>Scenario</b> to compare.</p>
         <div class="figbox"><svg id="sankey" viewBox="0 0 640 360" role="img" aria-label="Sankey diagram"></svg></div>
       </section>
 
@@ -289,8 +292,8 @@ details .body p{margin:6px 0}
           </svg>
         </div>
         <div class="nodes">
-          <p><span class="tag a">Node A</span>Just below the diversion, before any return flow comes back. Flow here changes only by how much less (or more) water the diversion takes. Water protected in the river shows up here right away, during the diversion season. Water used again by the same user or another user never reaches this point.</p>
-          <p><span class="tag b">Node B</span>Downstream of every return flow. Flow here shows the whole effect: the change in diversion, the change in quick returns, and the change in slow returns that arrive through the aquifer months later. Over a full year, the changes at Node B add up to the basin's gain or loss of water.</p>
+          <p><span class="tag a">Node A</span>Just below the diversion, before any <a class="gl" href="types.html#return-flow" target="_blank" rel="noopener">return flow</a> comes back. Flow here changes only by how much less (or more) water the diversion takes. Water protected in the river shows up here right away, during the diversion season. Water used again by the same user or another user never reaches this point.</p>
+          <p><span class="tag b">Node B</span>Downstream of every return flow. Flow here shows the whole effect: the change in diversion, the change in quick returns, and the change in slow returns that arrive through the aquifer months later. Over a full year, the changes at Node B add up to the basin's <a class="gl" href="types.html#net-savings" target="_blank" rel="noopener">net savings</a>, or its loss of water.</p>
         </div>
         <div class="legend"><span><i style="background:var(--accent)"></i>Node A</span><span><i style="background:var(--late)"></i>Node B</span></div>
         <div class="figbox"><svg id="hydro" viewBox="0 0 640 250" role="img" aria-label="Monthly change in flow at Node A and Node B"></svg></div>
@@ -299,7 +302,7 @@ details .body p{margin:6px 0}
 
       <section class="card panel" aria-label="Full accounting">
         <div class="card-head"><h2>Full accounting</h2></div>
-        <p class="cap">Every unit of water, in three steps. <b>Before</b> is the current practice. <b>After practice</b> has the new practice in place, with the freed water not yet used. <b>After reuse</b> is the final outcome, once the freed water reaches its destinations. The last column is what the practice frees from each part of the water balance. Its two totals are the wet saving and the reported saving.</p>
+        <p class="cap">Every unit of water, in three steps. <b><a class="gl" href="types.html#before" target="_blank" rel="noopener">Before</a></b> is the current practice. <b><a class="gl" href="types.html#after-practice" target="_blank" rel="noopener">After practice</a></b> has the new practice in place, with the freed water not yet used. <b><a class="gl" href="types.html#after-reuse" target="_blank" rel="noopener">After reuse</a></b> is the final outcome, once the freed water reaches its destinations. The last column is what the practice frees from each part of the water balance. Its two totals are the <a class="gl" href="types.html#wet" target="_blank" rel="noopener">wet saving</a> and the <a class="gl" href="types.html#reported-saving" target="_blank" rel="noopener">reported saving</a>.</p>
         <div class="tablebox"><table id="states"></table></div>
       </section>
 

@@ -12,9 +12,9 @@
   const LAMS = [["s", "Protected in the source"], ["u", "Re-applied by the proprietor (rebound)"], ["t", "Transferred to another user"], ["b", "Banked or recharged"]];
   const KEYS = ["cb", "cn", "q", "s"];
   const TYPE_TEXT = {
-    A: "Type A: the practice cuts consumption and gives up some service (fewer acres, less lawn). The saving is mostly real water.",
-    B: "Type B: the practice cuts evaporation or loss to a sink and keeps the service. The saving is real water.",
-    C: "Type C: the practice mostly cuts water that would have flowed back. Little of the saving is new water; mostly the timing and location of flows change.",
+    A: "Type A: the practice cuts consumption and gives up some service (fewer acres, less lawn). Most of the saving can become net savings.",
+    B: "Type B: the practice cuts evaporation or loss to a sink and keeps the service. Nearly all of the saving can become net savings.",
+    C: "Type C: the practice mostly cuts water that would have flowed back. Little of the saving can become net savings; mostly the timing and location of flows change.",
     D: "Type D: the practice frees little or no withdrawal. Any effect comes from moving water in time or space.",
   };
   const DISP_TEXT = {
@@ -25,6 +25,8 @@
     mixed: "The freed water is split among several destinations.",
   };
   const $ = (id) => document.getElementById(id);
+  // Link a term to its plain-language definition on types.html.
+  const gl = (id, text) => `<a class="gl" href="types.html#${id}" target="_blank" rel="noopener">${text}</a>`;
 
   let st = {};
   function load(id) { st = { ...scenario(id), view: "scn" }; }
@@ -200,13 +202,13 @@
     const sD = $("s-D");
     sD.textContent = sfmt(r.dD);
     sD.className = "v " + (r.dD > 0.05 ? "bad" : r.dD < -0.05 ? "good" : "");
-    $("s-D-s").textContent = r.dD > 0.05 ? `Water consumed or lost to the basin each year. Here it rises by ${fmt(r.dD)}: the basin loses water.` : r.dD < -0.05 ? `Water consumed or lost to the basin each year. Here it falls by ${fmt(-r.dD)}: the basin gains water.` : "Water consumed or lost to the basin each year. Here it does not change.";
+    $("s-D-s").innerHTML = r.dD > 0.05 ? `Water consumed or lost to the basin each year. Here it rises by ${fmt(r.dD)}: the basin loses water.` : r.dD < -0.05 ? `Water consumed or lost to the basin each year. Here it falls by ${fmt(-r.dD)}, the ${gl("net-savings", "net savings")}.` : "Water consumed or lost to the basin each year. Here it does not change.";
     const sp = $("s-phi");
     sp.textContent = fmt(r.phi, 2);
     sp.className = "v " + (r.phi < -0.005 ? "bad" : "");
     $("s-W").textContent = sfmt(r.dW);
     $("code").textContent = r.code;
-    $("code-exp").innerHTML = `<b>Practice code.</b> ${TYPE_TEXT[r.type]} ${DISP_TEXT[r.disposition]}`;
+    $("code-exp").innerHTML = `<b>${gl("practice-code", "Practice code")}.</b> ${gl("type-" + r.type.toLowerCase(), "Type " + r.type)}${TYPE_TEXT[r.type].slice(6)} ${gl("disp-" + r.disposition, DISP_TEXT[r.disposition])}`;
     const tot = Math.abs(r.Fwet) + Math.abs(r.Fdry) || 1;
     $("bar-wet").style.width = (Math.abs(r.Fwet) / tot) * 100 + "%";
     $("bar-dry").style.width = (Math.abs(r.Fdry) / tot) * 100 + "%";
@@ -216,8 +218,8 @@
     else {
       const used = r.F * r.sumLd;
       sign = used < 0.05
-        ? `None of the freed water is consumed again, so the basin keeps the whole wet saving of ${fmt(r.Fwet)}.`
-        : `The basin loses water when the freed water that is used again consumes more than the wet saving. Here reuse consumes ${fmt(used)} units against a wet saving of ${fmt(r.Fwet)}.`;
+        ? `None of the freed water is consumed again, so ${gl("net-savings", "net savings")} equal the whole ${gl("wet", "wet saving")} of ${fmt(r.Fwet)}.`
+        : `The basin loses water when the freed water that is used again consumes more than the ${gl("wet", "wet saving")}. Here reuse consumes ${fmt(used)} units against a wet saving of ${fmt(r.Fwet)}.`;
       if (r.du > 1e-9) {
         const th = r.Fwet / (r.F * r.du);
         sign += th < 1 ? ` If the rest were protected, re-applying more than ${pct(Math.max(th, 0))} of the freed water would make the basin worse off.` : " Even if the user re-applied all of it, the basin would not lose water.";
