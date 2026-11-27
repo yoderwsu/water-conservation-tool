@@ -43,6 +43,7 @@ The tests pin the paper's scenario table (`tab:scenarios`) and check the identit
 | `src/presets.js` | Sectors (irrigation, municipal) and example scenarios. |
 | `src/app.js` | User interface: controls and drawing. |
 | `index.html` | Page markup and styles. |
+| `types.html` | Definitions of the practice types (A to D) and dispositions, linked from the practice code in the summary. |
 | `test/model.test.js` | Tests (`node --test`). |
 | `scripts/render-math.js` | Typesets the equations in `index.html` as MathML (`npm run render:math`, after `npm install`). The output is committed, so the page loads no math library. |
 | `scripts/build-artifact.js` | Builds `dist/artifact.html` for publishing as a claude.ai Artifact. |
